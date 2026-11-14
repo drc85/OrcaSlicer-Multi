@@ -23,6 +23,16 @@ These downloads contain the companion and its own small tab-name bridge only. Th
 
 Get Orca from the [official OrcaSlicer releases](https://github.com/OrcaSlicer/OrcaSlicer/releases). This fork starts from upstream `main`, the development source used for Nightly work. The companion runs the `orca-slicer.exe` you choose: it does not download, replace or update Orca. H3C support comes from that Orca build, not from this window host.
 
+## OrcaSlicer must be installed separately
+
+The installer installs **only the Multi Printer Tabs companion**. Install or extract a compatible OrcaSlicer development/Nightly build separately, then select its `orca-slicer.exe` on first launch. A compatible portable Orca installation also works; it does not need a Windows installer. Keep that Orca executable and its complete application folder available after setup.
+
+## Allow multiple Orca instances
+
+Multiple instances must be allowed so each tab can run its own Orca workspace. In Orca's preferences, enable **Allow multiple instances**, or disable **Single instance / Only one instance** if your build uses that wording. Apply the setting before using several tabs and restart Orca if requested.
+
+The companion also sets `app.single_instance = false` automatically in each workspace copy. It does not change the original template's setting. If a new tab opens in an existing Orca window instead, check this preference in the affected workspace and confirm that you selected a compatible Orca build.
+
 ## First start
 
 1. Close Orca before copying its configuration, so the files are consistent. Keep a backup of your projects.
