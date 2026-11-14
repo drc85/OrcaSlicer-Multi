@@ -23,7 +23,7 @@ class WorkspaceState(orca.script.ScriptPluginCapabilityBase):
 
     def execute(self):
         self._publish()
-        return orca.ExecutionResult.success("Tabname aktualisiert")
+        return orca.ExecutionResult.success("Tab name updated")
 
     def on_lifecycle_event(self, event, ctx):
         # Host access must stay on Orca's UI thread. Some slicing events run

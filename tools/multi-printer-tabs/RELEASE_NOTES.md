@@ -1,6 +1,8 @@
 Windows x64 preview of the Multi Printer Tabs companion.
 
-Download **OrcaMultiPrinterTabs-0.9.0-Setup.exe** for installation, or extract **OrcaMultiPrinterTabs-0.9.0-win-x64.zip** for portable use. The automatic GitHub source archives are source code, not the installer.
+All companion labels, tooltips, startup dialogs, status messages and bridge notifications are now in English. Installer and project documentation are in English as well. Embedded Orca and Windows system dialogs follow their own language settings.
+
+Download **OrcaMultiPrinterTabs-0.9.1-Setup.exe** for installation, or extract **OrcaMultiPrinterTabs-0.9.1-win-x64.zip** for portable use. The automatic GitHub source archives are source code, not the installer.
 
 Includes independent printer/project tabs, 1/2/4/8 split views, highlighted active tabs, bright red dividers, normal Orca save prompts when closing, and fixes preserving plugin texture/Python assets in local workspace copies. Startup window flashing is reduced but cannot be guaranteed absent.
 

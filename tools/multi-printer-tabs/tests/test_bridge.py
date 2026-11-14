@@ -11,7 +11,7 @@ class BridgeTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.printer = "Snapmaker U1 PAXX"
-        self.project = "C:/Projects/Halter.3mf"
+        self.project = "C:/Projects/Bracket.3mf"
         self.dirty = False
         self.ready = True
         events = ("NewProject", "ProjectOpened", "ProjectAfterSave", "ProjectClosed",
@@ -45,7 +45,7 @@ class BridgeTests(unittest.TestCase):
         self.bridge.on_load()
         self.assertEqual(self.read()["printer"],"Snapmaker U1 PAXX")
         self.printer="Bambu Lab H3C 0.4 nozzle"
-        self.project="C:/Projects/Gehäuse.3mf"; self.dirty=True
+        self.project="C:/Projects/Enclosure-\u00e9.3mf"; self.dirty=True
         self.bridge.on_lifecycle_event("PresetSelected",None)
         self.assertEqual(self.read()["printer"],self.printer)
         self.assertEqual(self.read()["project"],self.project)

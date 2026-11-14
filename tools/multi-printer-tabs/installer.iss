@@ -1,4 +1,4 @@
-#define AppVersion "0.9.0"
+#define AppVersion "0.9.1"
 [Setup]
 AppId={{9624E509-A864-46AA-90C3-B637B1234E5F}
 AppName=OrcaSlicer Multi Printer Tabs

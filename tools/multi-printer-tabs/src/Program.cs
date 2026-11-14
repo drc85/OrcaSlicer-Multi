@@ -64,7 +64,7 @@ namespace OrcaMultiPrinterTabs {
     class Settings { public string OrcaPath {get;set;} public string TemplateData {get;set;} public string WorkspaceRoot {get;set;} }
     class Session { public List<string> Workspaces {get;set;} public string Active {get;set;} public int Layout {get;set;} }
     class Workspace {
-        public string Id, Folder, StateFile, Printer="Orca", Project="Neues Projekt";
+        public string Id, Folder, StateFile, Printer="Orca", Project="New project";
         public Process Process; public IntPtr Window, OriginalStyle, OriginalExStyle;
         public Panel View; public Label Status; public Button Tab;
         public bool Starting=true, CloseRequested, Detached;
@@ -92,7 +92,7 @@ namespace OrcaMultiPrinterTabs {
         readonly Color bg=Color.FromArgb(24,27,30), accent=Color.FromArgb(171,46,48);
 
         public Host() {
-            Text="Orca Slicer Multi Printer Tabs — Vorschau 0.9"; Width=1500; Height=950; MinimumSize=new Size(900,600);
+            Text="Orca Slicer Multi Printer Tabs — Preview 0.9.1"; Width=1500; Height=950; MinimumSize=new Size(900,600);
             FormBorderStyle=FormBorderStyle.None; Padding=new Padding(2); MaximizedBounds=Screen.FromHandle(Handle).WorkingArea;
             BackColor=bg; ForeColor=Color.WhiteSmoke; Font=new Font("Segoe UI",10); StartPosition=FormStartPosition.CenterScreen;
             tabs.Dock=DockStyle.Fill; tabs.WrapContents=false; tabs.AutoScroll=true; tabs.BackColor=Color.FromArgb(53,27,30); tabs.Padding=new Padding(7,5,7,0);
@@ -100,11 +100,11 @@ namespace OrcaMultiPrinterTabs {
             var actions=new FlowLayoutPanel { Dock=DockStyle.Right, Width=48, Padding=new Padding(0,6,0,0), BackColor=tabs.BackColor };
             var viewArea=new Panel {Dock=DockStyle.Left,Width=77,BackColor=tabs.BackColor};
             Style(add,"+",40); Style(layoutButton,"▦ 1",65); Style(closeAll,"×",40);
-            add.AccessibleName="Neuer Orca-Tab"; layoutButton.AccessibleName="Ansicht: 1, 2, 4 oder 8 Tabs"; closeAll.AccessibleName="Alle Orca-Tabs schließen";
-            hints.SetToolTip(layoutButton,"Ansicht wechseln: 1, 2, 4 oder 8 Tabs gleichzeitig");
+            add.AccessibleName="New Orca tab"; layoutButton.AccessibleName="View: 1, 2, 4 or 8 tabs"; closeAll.AccessibleName="Close all Orca tabs";
+            hints.SetToolTip(layoutButton,"Switch view: show 1, 2, 4 or 8 tabs at once");
             foreach(int count in new[]{1,2,4,8}) {
                 int choice=count;
-                var item=new ToolStripMenuItem(count==1?"Einzelansicht":count+" Tabs gleichzeitig");
+                var item=new ToolStripMenuItem(count==1?"Single view":count+" tabs at once");
                 item.Tag=count; item.Click+=delegate {layoutCount=choice;LayoutViews();SaveSession();};layoutMenu.Items.Add(item);
             }
             layoutButton.Location=new Point(6,6);viewArea.Controls.Add(layoutButton);
@@ -160,19 +160,19 @@ namespace OrcaMultiPrinterTabs {
                 if(settings==null) settings=new Settings();
                 if(String.IsNullOrEmpty(settings.WorkspaceRoot)) settings.WorkspaceRoot=Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),"OrcaMulti","OT");
                 if(!File.Exists(settings.OrcaPath)) {
-                    using(var pick=new OpenFileDialog {Title="Deine orca-slicer.exe auswählen",Filter="OrcaSlicer|orca-slicer.exe"}) {
+                    using(var pick=new OpenFileDialog {Title="Select your orca-slicer.exe",Filter="OrcaSlicer|orca-slicer.exe"}) {
                         if(pick.ShowDialog()!=DialogResult.OK) {Close();return;} settings.OrcaPath=pick.FileName;
                     }
                 }
                 if(!Directory.Exists(settings.TemplateData)) {
-                    using(var pick=new FolderBrowserDialog {Description="Orca-Datenordner als Vorlage auswählen (wird nur kopiert)"}) {
+                    using(var pick=new FolderBrowserDialog {Description="Select the Orca data folder to copy as a workspace template"}) {
                         if(pick.ShowDialog()!=DialogResult.OK) {Close();return;} settings.TemplateData=pick.SelectedPath;
                     }
                 }
-                if(!File.Exists(Path.Combine(settings.TemplateData,"OrcaSlicer.conf")))throw new InvalidOperationException("Die Vorlage muss OrcaSlicer.conf enthalten.");
+                if(!File.Exists(Path.Combine(settings.TemplateData,"OrcaSlicer.conf")))throw new InvalidOperationException("The template folder must contain OrcaSlicer.conf.");
                 string template=Path.GetFullPath(settings.TemplateData).TrimEnd(Path.DirectorySeparatorChar)+Path.DirectorySeparatorChar;
                 string workspaceRoot=Path.GetFullPath(settings.WorkspaceRoot).TrimEnd(Path.DirectorySeparatorChar)+Path.DirectorySeparatorChar;
-                if(workspaceRoot.StartsWith(template,StringComparison.OrdinalIgnoreCase))throw new InvalidOperationException("Die Arbeitsordner dürfen nicht innerhalb der Einstellungsvorlage liegen.");
+                if(workspaceRoot.StartsWith(template,StringComparison.OrdinalIgnoreCase))throw new InvalidOperationException("Workspace folders must be outside the template settings folder.");
                 try {Icon=Icon.ExtractAssociatedIcon(settings.OrcaPath);}catch{}
                 File.WriteAllText(file,json.Serialize(settings),new UTF8Encoding(false));
                 Directory.CreateDirectory(settings.WorkspaceRoot); pulse.Start();
@@ -183,7 +183,7 @@ namespace OrcaMultiPrinterTabs {
                     foreach(string id in session.Workspaces.Take(12)) if(IsId(id)) await AddWorkspace(id);
                     var last=workspaces.Find(w=>w.Id==session.Active); if(last!=null) Select(last);
                 } else await AddWorkspace(null);
-            } catch(Exception ex) { Log(ex.ToString()); MessageBox.Show(this,ex.Message,"Start fehlgeschlagen"); }
+            } catch(Exception ex) { Log(ex.ToString()); MessageBox.Show(this,ex.Message,"Startup failed"); }
         }
         static bool IsId(string id) {
             if(String.IsNullOrEmpty(id))return false;
@@ -236,13 +236,13 @@ namespace OrcaMultiPrinterTabs {
                 }
                 w=new Workspace {Id=id,Folder=Path.Combine(settings.WorkspaceRoot,id)};
                 w.View=new Panel {BackColor=bg};
-                w.Status=new Label {Dock=DockStyle.Fill,Text="Deine Einstellungen werden für diesen Tab kopiert …",TextAlign=ContentAlignment.MiddleCenter,ForeColor=Color.Silver};
+                w.Status=new Label {Dock=DockStyle.Fill,Text="Copying your settings for this tab …",TextAlign=ContentAlignment.MiddleCenter,ForeColor=Color.Silver};
                 w.View.Controls.Add(w.Status); content.Controls.Add(w.View);
-                w.Tab=new Button(); Style(w.Tab,"Orca startet …",305); w.Tab.TextAlign=ContentAlignment.MiddleLeft;
+                w.Tab=new Button(); Style(w.Tab,"Starting Orca …",305); w.Tab.TextAlign=ContentAlignment.MiddleLeft;
                 w.Tab.Click+=delegate {Select(w);};
                 workspaces.Add(w);tabs.Controls.Add(w.Tab);tabs.Controls.SetChildIndex(add,tabs.Controls.Count-1);Select(w);
                 await Task.Run(delegate {Prepare(w);});
-                w.Status.Text="Orca startet …";
+                w.Status.Text="Starting Orca …";
                 var info=new ProcessStartInfo(settings.OrcaPath,"--datadir \""+w.Folder+"\"") {WorkingDirectory=Path.GetDirectoryName(settings.OrcaPath),UseShellExecute=false,WindowStyle=ProcessWindowStyle.Hidden};
                 // No shared datadir: every process owns its configuration and locks.
                 w.Process=Process.Start(info); w.Started=DateTime.UtcNow;
@@ -263,8 +263,8 @@ namespace OrcaMultiPrinterTabs {
                 w.MinHook=Native.SetWinEventHook(0x0016,0x0016,IntPtr.Zero,w.Events,(uint)w.Process.Id,0,0);
                 Log("Started workspace "+w.Id+" PID "+w.Process.Id); SaveSession();
             } catch(Exception ex) {
-                Log(ex.ToString()); if(w!=null) {w.Starting=false;w.Status.Text="Start fehlgeschlagen: "+ex.Message;}
-                MessageBox.Show(this,ex.Message,"Orca konnte nicht gestartet werden");
+                Log(ex.ToString()); if(w!=null) {w.Starting=false;w.Status.Text="Startup failed: "+ex.Message;}
+                MessageBox.Show(this,ex.Message,"Could not start Orca");
             } finally {preparing=false;add.Enabled=true;}
         }
         void Embed(Workspace w,IntPtr handle) {
@@ -321,7 +321,7 @@ namespace OrcaMultiPrinterTabs {
                     if(w.Process.HasExited) {Log("Exited workspace "+w.Id);Remove(w);continue;}
                     if(w.Window==IntPtr.Zero && w.Starting) {
                         IntPtr handle=Native.FindMain(w.Process.Id);if(handle!=IntPtr.Zero)Embed(w,handle);
-                        else if((DateTime.UtcNow-w.Started).TotalSeconds>90) w.Status.Text="Orca braucht länger zum Starten. Prüfe mögliche Orca-Dialoge über die Taskleiste.";
+                        else if((DateTime.UtcNow-w.Started).TotalSeconds>90) w.Status.Text="Orca is taking longer to start. Check the taskbar for Orca dialogs.";
                     }
                     if(w.Window!=IntPtr.Zero) {
                         if(Native.IsIconic(w.Window)){Native.ShowWindow(w.Window,9);WindowState=FormWindowState.Minimized;}
@@ -350,7 +350,7 @@ namespace OrcaMultiPrinterTabs {
             bool dirty=false;
             string title=Native.Title(w.Window);
             if(title.EndsWith(" - OrcaSlicer")) w.Project=title.Substring(0,title.Length-13).TrimStart('*').Trim();
-            if(String.IsNullOrWhiteSpace(w.Project)||w.Project=="Untitled")w.Project="Neues Projekt";
+            if(String.IsNullOrWhiteSpace(w.Project)||w.Project=="Untitled")w.Project="New project";
             dirty=title.StartsWith("*");
             if(w.StateFile==null || !File.Exists(w.StateFile)) {
                 string folder=Path.Combine(w.Folder,"orca_plugins","plugin_data","multi_printer_tabs_bridge");
@@ -413,10 +413,11 @@ namespace OrcaMultiPrinterTabs {
     }
     static class Program {
         [STAThread] static void Main() {
+            System.Threading.Thread.CurrentThread.CurrentUICulture=System.Globalization.CultureInfo.GetCultureInfo("en-US");
             Native.SetCurrentProcessExplicitAppUserModelID("OrcaSlicer.MultiPrinterTabs");
             bool created;
             using(var mutex=new System.Threading.Mutex(true,"Local\\OrcaSlicerMultiPrinterTabsPreview",out created)) {
-            if(!created){MessageBox.Show("Die Tab-Oberfläche läuft bereits. Öffne einen weiteren Tab mit +.","Orca Slicer Multi Printer Tabs");return;}
+            if(!created){MessageBox.Show("The tab window is already running. Open another tab with +.","Orca Slicer Multi Printer Tabs");return;}
             Application.EnableVisualStyles();Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Host());
             }

@@ -2,14 +2,14 @@
 
 Use several complete OrcaSlicer workspaces in one window. Keep a Bambu printer, a Snapmaker U1 and other supported printers open at the same time, with a separate project and Device view in each tab.
 
-**Windows x64 preview 0.9.** This is an independent companion application. It hosts separate OrcaSlicer processes in one window; it does not change Orca's C++ application or add a native tab feature to an upstream build. Building the inherited OrcaSlicer source alone does not build this companion.
+**Windows x64 preview 0.9.1.** This is an independent companion application. It hosts separate OrcaSlicer processes in one window; it does not change Orca's C++ application or add a native tab feature to an upstream build. Building the inherited OrcaSlicer source alone does not build this companion.
 
 ## Download and install
 
 Open [Releases](https://github.com/drc85/OrcaSlicer-Multi/releases) and download either:
 
-- `OrcaMultiPrinterTabs-0.9.0-Setup.exe`: per-user installer with Start menu and optional desktop shortcut. No administrator rights required.
-- `OrcaMultiPrinterTabs-0.9.0-win-x64.zip`: portable package. Extract the entire ZIP into a writable folder and run `OrcaSlicerMultiPrinterTabs.exe`. Keep its `plugin` folder and `.exe.config` beside it.
+- `OrcaMultiPrinterTabs-0.9.1-Setup.exe`: per-user installer with Start menu and optional desktop shortcut. No administrator rights required.
+- `OrcaMultiPrinterTabs-0.9.1-win-x64.zip`: portable package. Extract the entire ZIP into a writable folder and run `OrcaSlicerMultiPrinterTabs.exe`. Keep its `plugin` folder and `.exe.config` beside it.
 
 These downloads contain the companion and its own small tab-name bridge only. They do not contain an OrcaSlicer executable, third-party plugins, accounts, printer settings or projects. The binaries are unsigned; Windows may display its usual publisher warning. SHA-256 checksums are included with the release.
 
@@ -34,6 +34,8 @@ The release is clean. On your own computer, the configuration you select can inc
 Default workspace storage is `Documents\OrcaMulti\OT\<8-character-id>`. Short paths matter: some Python/plugin packages fail under deeply nested paths. `settings.json`, `session.json` and `host.log` are stored beside the companion. You can edit `WorkspaceRoot` in `settings.json` while the application is closed; do not place it inside the template folder. Moving existing workspaces requires moving their folders too.
 
 ## Controls
+
+All companion labels, tooltips, startup/status messages and bridge notifications are in English. The installer is in English. Embedded OrcaSlicer and Windows system dialogs follow their own language settings; the companion does not overwrite your Orca language preference.
 
 - The view selector at the far left shows **1, 2, 4 or 8** full workspaces. Layouts are single view, two side by side, 2×2, and 4×2.
 - Workspace tabs show **selected printer · current project**. The active tab is highlighted. `*` follows Orca's unsaved-project indicator.
