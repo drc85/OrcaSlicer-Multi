@@ -1,3 +1,17 @@
+# OrcaSlicer Multi Printer Tabs
+
+Windows companion for independent printer/project tabs and **1 / 2 / 4 / 8 split views**.
+
+- **[Download installer / portable preview](https://github.com/drc85/OrcaSlicer-Multi/releases)**
+- **[Setup, controls, Bambu plugin links and limitations](tools/multi-printer-tabs/README.md)**
+- Companion source: `tools/multi-printer-tabs/`.
+
+This branch adds a separate window host to an OrcaSlicer development-source fork. The release contains the companion, not a rebuilt OrcaSlicer. Choose your own compatible Orca Nightly executable at first start. No personal settings, projects, accounts or installed third-party plugins are distributed.
+
+---
+
+## Upstream OrcaSlicer documentation
+
 <div align="center">
 
 <picture>

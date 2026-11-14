@@ -1,0 +1,46 @@
+name: Multi Printer Tabs release
+on:
+  push:
+    branches: [multi-printer-tabs]
+    paths:
+      - tools/multi-printer-tabs/**
+      - .github/workflows/multi-printer-tabs-release.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: multi-printer-tabs-release
+  cancel-in-progress: false
+jobs:
+  release:
+    if: github.repository == 'drc85/OrcaSlicer-Multi'
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Build and test companion
+        shell: pwsh
+        working-directory: tools/multi-printer-tabs
+        run: |
+          ./build.ps1
+          python ./tests/test_bridge.py
+          if ($LASTEXITCODE -ne 0) { throw 'Bridge tests failed' }
+          ./test-clone.ps1
+      - name: Build portable ZIP and installer
+        shell: pwsh
+        working-directory: tools/multi-printer-tabs
+        run: |
+          $inno = 'C:\Program Files (x86)\Inno Setup 6\ISCC.exe'
+          if (!(Test-Path $inno)) { throw 'Inno Setup 6 is missing from the Windows runner' }
+          ./package.ps1 -InnoCompiler $inno
+      - name: Publish preview release
+        shell: pwsh
+        working-directory: tools/multi-printer-tabs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $tag = 'multi-tabs-v0.9.0'
+          gh release view $tag --repo $env:GITHUB_REPOSITORY *> $null
+          if ($LASTEXITCODE -eq 0) { throw 'Release already exists; use a new version for new source' }
+          gh release create $tag --repo $env:GITHUB_REPOSITORY --target $env:GITHUB_SHA --title 'Multi Printer Tabs 0.9.0 - Windows preview' --notes-file RELEASE_NOTES.md --prerelease --latest=false dist/OrcaMultiPrinterTabs-0.9.0-Setup.exe dist/OrcaMultiPrinterTabs-0.9.0-win-x64.zip dist/SHA256SUMS.txt
+          if ($LASTEXITCODE -ne 0) { throw 'Release publication failed' }
+

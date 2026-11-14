@@ -1,0 +1,12 @@
+*.exe
+*.zip
+*.dll
+dist/
+work/
+__pycache__/
+*.pyc
+settings.json
+session.json
+host.log
+instances/
+*.log
