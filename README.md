@@ -1,98 +1,105 @@
 # OrcaSlicer Multi Printer Tabs
 
-Mehrere vollständige Orca-Arbeitsbereiche in einem Fenster: Jeder Tab hat einen eigenen Drucker, ein eigenes Projekt und eine eigene Device-Ansicht. So können zum Beispiel Bambu und Snapmaker U1 gleichzeitig geöffnet bleiben.
+Use several complete OrcaSlicer workspaces in one window. Keep a Bambu printer, a Snapmaker U1 and other supported printers open at the same time, with a separate project and Device view in each tab.
 
-**Windows x64 · Vorschau 0.9.0**
+**Windows x64 preview 0.9.** This is an independent companion application. It hosts separate OrcaSlicer processes in one window; it does not change Orca's C++ application or add a native tab feature to an upstream build. Building the inherited OrcaSlicer source alone does not build this companion.
 
-## Download
+## Download and install
 
-**[Installer herunterladen (.exe)](https://github.com/drc85/OrcaSlicer-Multi/releases/download/multi-tabs-v0.9.0/OrcaMultiPrinterTabs-0.9.0-Setup.exe)**
+**[Download Windows installer](https://github.com/drc85/OrcaSlicer-Multi/releases/download/multi-tabs-v0.9.0/OrcaMultiPrinterTabs-0.9.0-Setup.exe)** · **[Download portable ZIP](https://github.com/drc85/OrcaSlicer-Multi/releases/download/multi-tabs-v0.9.0/OrcaMultiPrinterTabs-0.9.0-win-x64.zip)**
 
-Alternativ: **[Portables ZIP herunterladen](https://github.com/drc85/OrcaSlicer-Multi/releases/download/multi-tabs-v0.9.0/OrcaMultiPrinterTabs-0.9.0-win-x64.zip)** · [Release und Prüfsummen](https://github.com/drc85/OrcaSlicer-Multi/releases/tag/multi-tabs-v0.9.0)
+Open [Releases](https://github.com/drc85/OrcaSlicer-Multi/releases) and download either:
 
-Die automatisch von GitHub angebotenen „Source code“-Archive sind Quellcode, keine Installationsdateien.
+- `OrcaMultiPrinterTabs-0.9.0-Setup.exe`: per-user installer with Start menu and optional desktop shortcut. No administrator rights required.
+- `OrcaMultiPrinterTabs-0.9.0-win-x64.zip`: portable package. Extract the entire ZIP into a writable folder and run `OrcaSlicerMultiPrinterTabs.exe`. Keep its `plugin` folder and `.exe.config` beside it.
 
-## Installation und erster Start
+These downloads contain the companion and its own small tab-name bridge only. They do not contain an OrcaSlicer executable, third-party plugins, accounts, printer settings or projects. The binaries are unsigned; Windows may display its usual publisher warning. SHA-256 checksums are included with the release.
 
-1. Eine kompatible OrcaSlicer-Nightly muss separat installiert sein. Voraussetzung sind Windows 10/11 x64, .NET Framework 4.8 und Orcas benötigte Python-Plugin-Schnittstelle.
-2. Installer herunterladen und ausführen. Er installiert die Tab-Oberfläche für deinen Windows-Benutzer und bietet eine Desktop-Verknüpfung an. Alternativ das gesamte portable ZIP in einen beschreibbaren Ordner entpacken.
-3. Projekte speichern und Orca vor der ersten Übernahme seiner Einstellungen schließen.
-4. **OrcaSlicer Multi Printer Tabs** starten. Bei der portablen Version die Datei `OrcaSlicerMultiPrinterTabs.exe` öffnen; den Unterordner `plugin` und die `.exe.config` daneben lassen.
-5. Deine vorhandene `orca-slicer.exe` auswählen.
-6. Deinen Orca-Datenordner auswählen. Er muss die Datei `OrcaSlicer.conf` enthalten. Bei einer normalen Installation ist das meist `%APPDATA%\OrcaSlicer`; bei einer portablen Installation kann es ein anderer Ordner sein.
-7. Der erste Tab startet mit einer lokalen Kopie dieser Einstellungen. Drucker auswählen und ein Projekt ganz normal in Orca öffnen. Mit **+** weitere unabhängige Tabs hinzufügen.
+## Requirements / Nightly
 
-Die Original-Einstellungen werden nicht verändert. Jeder neue Tab bekommt eine eigene Kopie derselben Vorlage. Spätere Änderungen innerhalb eines Tabs bleiben in dessen Arbeitsordner und werden nicht automatisch auf andere Tabs übertragen.
+- Windows 10/11 x64 and .NET Framework 4.8.
+- A separately installed OrcaSlicer development/Nightly build with the Python plugin API used by `plugin/workspace_bridge.py`.
+- Local testing used **OrcaSlicer 2.6.0-dev, H3C PR #17273, commit `1babccb8`**, including H3C and Snapmaker U1 workspace names. Newer Nightly compatibility is not guaranteed.
 
-## Bedienung
+Get Orca from the [official OrcaSlicer releases](https://github.com/OrcaSlicer/OrcaSlicer/releases). This fork starts from upstream `main`, the development source used for Nightly work. The companion runs the `orca-slicer.exe` you choose: it does not download, replace or update Orca. H3C support comes from that Orca build, not from this window host.
 
-| Element | Funktion |
-| --- | --- |
-| Ansicht ganz links | 1, 2, 4 oder 8 Arbeitsbereiche gleichzeitig anzeigen |
-| Drucker-/Projekt-Tab | Zu diesem Arbeitsbereich wechseln; der aktive Tab leuchtet |
-| **+** hinter dem letzten Tab | Neuen unabhängigen Arbeitsbereich öffnen |
-| Orcas eigenes **X** | Diesen Arbeitsbereich schließen |
-| Orcas Minimieren/Maximieren | Das gemeinsame Fenster minimieren/maximieren |
-| **X** ganz oben rechts | Alle Arbeitsbereiche und anschließend das Programm schließen |
+## First start
 
-Jeder Tab zeigt **Drucker · Projektname**. Ein Stern folgt Orcas Anzeige für ungespeicherte Änderungen. Jeder Tab kann ein anderes Projekt öffnen und einen anderen Drucker auswählen.
+1. Close Orca before copying its configuration, so the files are consistent. Keep a backup of your projects.
+2. Start the companion and select your `orca-slicer.exe`.
+3. Select your Orca data folder **containing `OrcaSlicer.conf`**. A normal Windows installation usually uses `%APPDATA%\OrcaSlicer`. A portable installation can use another folder.
+4. The first tab receives a local copy of that folder. Each new tab receives its own copy of the same template. The original folder is not edited.
+5. Select a printer and open a project using the embedded Orca's normal controls.
 
-Die Aufteilung ist bei zwei Ansichten nebeneinander, bei vier 2×2 und bei acht 4×2. Helle rote Trennlinien grenzen die Bereiche ab. Die obere Leiste ist dunkelrot. Freie Fläche der oberen Leiste ziehen, um das Fenster zu verschieben; doppelklicken zum Maximieren/Wiederherstellen.
+The release is clean. On your own computer, the configuration you select can include your own profiles, logins and plugins; those are copied locally into workspace folders. Nothing in this companion uploads those copies. Orca and any plugins you install retain their own network behavior.
 
-Beim Schließen fragt Orca selbst nach ungespeicherten Projekten. Es gibt keine zusätzliche Bestätigung der Tab-Oberfläche. Bei Abbruch in Orca bleibt die Sitzung offen; **+** kann einen laufenden Schließvorgang ebenfalls abbrechen.
+Default workspace storage is `Documents\OrcaMulti\OT\<8-character-id>`. Short paths matter: some Python/plugin packages fail under deeply nested paths. `settings.json`, `session.json` and `host.log` are stored beside the companion. You can edit `WorkspaceRoot` in `settings.json` while the application is closed; do not place it inside the template folder. Moving existing workspaces requires moving their folders too.
 
-## Bambu-Drucker und Plugins
+## Controls
 
-Für den hier verwendeten Bambu-Aufbau die folgenden Erweiterungen separat in einer kompatiblen Orca-Version einrichten, bevor neue Tab-Kopien erstellt werden:
+- The view selector at the far left shows **1, 2, 4 or 8** full workspaces. Layouts are single view, two side by side, 2×2, and 4×2.
+- Workspace tabs show **selected printer · current project**. The active tab is highlighted. `*` follows Orca's unsaved-project indicator.
+- **+**, directly after the last tab, creates another workspace. Open a different project or select another printer independently in each one.
+- The top strip is dark red; bright red dividers separate the split views.
+- Orca's own **X** closes that workspace. Its minimize/maximize buttons control the shared outer window.
+- The outer **X** at the far right closes all workspaces and then exits. Orca asks about unsaved work itself; there is no second companion confirmation. Cancel in Orca keeps the session running. **+** also cancels a pending shutdown.
+- Drag unused space on the top strip to move the window; double-click it to maximize/restore.
 
-- **[Open Bamboo Networking Plugin](https://cloud.orcaslicer.com/p/51a2b22084da)** für die hier verwendete Bambu-Verbindung. [Quellcode der Networking-Bibliothek](https://github.com/persano/open-bambu-networking-plugin). Die Installations-/Bibliotheksanleitung des Plugins beachten und Orca danach neu starten.
-- **[Bambu Filament Manager](https://cloud.orcaslicer.com/app/plugins/plugin-hub/3c5fccb6-d04f-4ab6-9b99-5b3eb7ddacb7)** für die zugehörige Filament-/AMS-Verwaltung. Er ergänzt diesen Aufbau; zum bloßen Senden jedes Druckauftrags ist er nicht grundsätzlich erforderlich.
+Tabs keep independent configuration folders and locks. Changes are not continuously synchronized between tabs or back into the original Orca installation. Background tabs keep running and can maintain printer connections. The host itself sends no print, movement or heating commands.
 
-Der Name des Netzwerk-Plugins lautet **Open Bamboo**. Es ist eine andere Erweiterung als die separate Anwendung **Bambu Connect** von Bambu Lab. Anmeldung und Einrichtung erfolgen lokal nach Anleitung der jeweiligen Entwickler.
+## Bambu printers: networking and filament management
 
-**Diese Drittanbieter-Plugins werden nicht mitgeliefert.** Die Veröffentlichung enthält nur die Tab-Oberfläche und ihre eigene kleine lokale Brücke zur Anzeige von Drucker- und Projektnamen.
+For the Bambu workflow used with this setup, install these separately in your compatible Orca build before making new workspace copies:
 
-## Nightly und Funktionsumfang
+- [Open Bamboo Networking Plugin — Orca Cloud](https://cloud.orcaslicer.com/p/51a2b22084da), with [networking library source](https://github.com/persano/open-bambu-networking-plugin). This provides the Open Bamboo integration used for Bambu connectivity here. Follow its installation and library-update instructions, then restart Orca and sign in locally if required.
+- [Bambu Filament Manager — Orca Cloud](https://cloud.orcaslicer.com/app/plugins/plugin-hub/3c5fccb6-d04f-4ab6-9b99-5b3eb7ddacb7), for the associated filament/AMS workflow. Follow its own setup instructions. It is an additional filament-management tool, not a universal requirement for sending a print.
 
-Die Tab-Oberfläche ist ein **separates Windows-Begleitprogramm**. Sie bettet mehrere vollständige Orca-Prozesse in ein Fenster ein. Das Release enthält keinen neu kompilierten OrcaSlicer und ersetzt deine Orca-Installation nicht. Du wählst selbst die passende Orca-EXE aus.
+The networking plugin's name is **Open Bamboo**, which is different from Bambu Lab's separate **Bambu Connect** application. Neither third-party plugin nor any credentials are bundled in this repository or release. Their support, firmware compatibility and login requirements are controlled by their maintainers.
 
-Lokal erprobt wurde **OrcaSlicer 2.6.0-dev, H3C PR #17273, Build `1babccb8`**. Die Kompatibilität mit jeder neueren Nightly ist nicht garantiert. H3C-, CAD- und Druckerunterstützung stammen aus der ausgewählten Orca-Version. CAD-Komponenten werden durch die Tab-Oberfläche nicht nachinstalliert oder erzwungen.
+## Plugin and CAD compatibility
 
-Die Arbeitskopien erhalten benötigte Python-Pakete, Texturen und entpackte Plugin-Bibliotheken. Anwendungsprotokolle und bestimmte temporäre Daten werden beim Kopieren ausgelassen.
+Workspace copying preserves installed Python packages, texture files and extracted wheel contents, including nested resource folders named `cache`. Only top-level application logs/cache/OTA/backup folders, Python bytecode caches and lock/log files are skipped. This prevents texture packages such as FilamentHub from losing their required assets during a copy.
 
-## Daten und Datenschutz
+CAD availability depends on the selected Orca build and its configuration. The companion does not install CAD components or force the experimental setting. If Orca requests a restart after a preference change, close and reopen that workspace normally. Changing the template does not change already created workspace copies.
 
-Die Veröffentlichung enthält **keine persönlichen Einstellungen, Konten, Druckerdaten, Projekte oder installierten Drittanbieter-Plugins**.
+## Limits and troubleshooting
 
-Erst beim Einrichten auf deinem eigenen Computer wird der von dir ausgewählte Datenordner lokal kopiert. Diese Kopien können deine eigenen Profile, Plugins und Anmeldedaten enthalten und sollten nicht weitergegeben werden. Die Tab-Oberfläche lädt diese Daten nicht hoch. Orca und von dir installierte Plugins haben ihr eigenes Netzwerkverhalten.
+- Each tab is a complete process with its own memory/GPU use. Start with two; eight can be demanding. Smaller grid cells may be cramped.
+- Startup splash is disabled in workspace copies, and window hooks/cloaking reduce the separate-window flash. A brief flash can still occur because Orca creates its window before the companion embeds it.
+- If a tab waits for startup, check the taskbar for Orca's own login, plugin, error or permission dialogs. The host does not automatically answer them.
+- Printer-name updates need the included bridge and compatible plugin APIs. The project name also follows Orca's native title. If the name is stale, check the bridge is enabled in that workspace.
+- Session data remembers workspace identities and layout, not complete in-memory project recovery. Save projects normally. There is no guaranteed recovery after a crash.
+- Full printer commands, cameras, all modal dialogs, mixed-DPI/multi-monitor use and eight simultaneous printers have not been comprehensively tested. This is an experimental Windows-only companion, not an official OrcaSlicer feature.
+- The wrapper does not support tab reordering, continuous profile sharing or automatic project reopening. A host crash can expose the separate Orca windows again.
 
-Die Standard-Arbeitsordner liegen unter `Dokumente\OrcaMulti\OT\<8-stellige-ID>`. Kurze Pfade sind wichtig, da manche Python-/Texturpakete bei langen Pfaden Probleme bekommen. `settings.json`, `session.json` und `host.log` liegen neben dem Begleitprogramm. Diese Dateien und die Arbeitsordner nicht auf GitHub hochladen.
+## Build and tests
 
-Die eigene Namens-Brücke schreibt Druckername, Projektpfad, Änderungsstatus und Prozess-ID lokal. Sie sendet keine Druckerbefehle und verwendet kein Netzwerk.
+The companion source is on the **[multi-printer-tabs branch](https://github.com/drc85/OrcaSlicer-Multi/tree/multi-printer-tabs)**, under `tools/multi-printer-tabs`. This `main` branch presents the project guide and retains the upstream development source. Switch to the companion branch before using the build commands below.
 
-## Bekannte Grenzen
+From `tools/multi-printer-tabs` in PowerShell:
 
-- Jeder Tab benötigt die Ressourcen einer vollständigen Orca-Instanz. Zunächst mit zwei Tabs beginnen; acht können viel RAM/GPU-Leistung benötigen.
-- Das kurze separate Orca-Fenster beim Start wird durch ausgeblendeten Splashscreen und Fensterbehandlung reduziert. Ein völlig unsichtbarer Start ist nicht garantiert.
-- Bei blockiertem Start in der Taskleiste nach Orcas eigenen Plugin-, Anmelde- oder Fehlermeldungen sehen.
-- Die Sitzung merkt sich Arbeitsordner und Ansicht, aber keine vollständige Wiederherstellung ungespeicherter Projekte. Projekte normal speichern.
-- Kein automatischer Profilabgleich, kein Verschieben der Tabs und kein automatisches Wiederöffnen von Projekten.
-- Vollständige Druck-/Kameratests, gemischte Bildschirm-Skalierung und acht gleichzeitige Drucker sind noch nicht umfassend geprüft.
-- Windows-Vorschau ohne digitale Signatur; Windows kann deshalb einen Herausgeberhinweis anzeigen.
+```powershell
+.\build.ps1
+python .\tests\test_bridge.py
+.\test-clone.ps1
+.\package.ps1
+```
 
-## Entfernen
+The build uses the .NET Framework compiler included with Windows; no .NET SDK is needed. `package.ps1` builds the portable ZIP and checksums. To also build the installer, install [Inno Setup 6](https://jrsoftware.org/isinfo.php) and pass `-InnoCompiler 'C:\Program Files (x86)\Inno Setup 6\ISCC.exe'`.
 
-Die installierte Version über die Windows-Einstellungen deinstallieren. Bei der portablen Version nach dem Schließen den entpackten Programmordner entfernen.
+The release workflow builds only this companion and publishes a prerelease from its exact source commit. It does not rebuild the full Orca C++ application. Offline bridge tests use a fake Orca API. The clone regression test checks required plugin assets survive and application logs are omitted; neither test reads real printer data. The common local window-host behavior was manually exercised; complete end-to-end printing tests remain outstanding.
 
-Arbeitsdaten unter `Dokumente\OrcaMulti\OT` bleiben absichtlich erhalten. Nur selbst löschen, wenn die darin enthaltenen Einstellungen und Projekte nicht mehr gebraucht werden. Die ursprüngliche Orca-Installation bleibt separat.
+## Privacy and removal
 
-## Quellcode und ausführliche technische Anleitung
+Only explicitly selected source/build/documentation files are published. Do not share `settings.json`, `session.json`, `host.log`, workspace folders or Orca data folders: they may contain local paths, login tokens, printer addresses and personal settings. Do not upload screenshots containing credentials when reporting an issue.
 
-- **[Branch mit dem Tab-Quellcode](https://github.com/drc85/OrcaSlicer-Multi/tree/multi-printer-tabs)**
-- **[Ausführliche englische Anleitung und Build-Befehle](https://github.com/drc85/OrcaSlicer-Multi/blob/multi-printer-tabs/tools/multi-printer-tabs/README.md)**
-- [Erfolgreicher Build inklusive Tests und Installer-Erstellung](https://github.com/drc85/OrcaSlicer-Multi/actions/runs/43622105735)
-- [Originale OrcaSlicer-Dokumentation](README.upstream.md)
+The companion's own bridge writes printer name, project path, dirty state and process ID into local plugin storage. It has no network access or printer-control commands. It is project source, not a copy of a user's installed third-party plugin.
 
-Der Tab-Quellcode liegt im Branch `multi-printer-tabs` unter `tools/multi-printer-tabs`. Dieser `main`-Branch zeigt die Projektanleitung; die geerbten Orca-Quelldateien bleiben die Entwicklungsbasis. Das alleinige Bauen dieser Orca-C++-Quelldateien erzeugt noch keine Tab-Oberfläche.
+Uninstall the installed companion through Windows Settings, or delete the extracted portable files after closing it. Workspace data under `Documents\OrcaMulti\OT` is deliberately retained; remove it yourself only when you no longer need its settings/projects. Your original Orca installation remains separate.
 
-Die Offline-Tests für die Namens-Brücke und die Erhaltung benötigter Plugin-Dateien bestehen. Die Entwicklung wurde mit KI-Unterstützung durchgeführt. Experimentelles unabhängiges Projekt, ohne offizielle Verbindung zu OrcaSlicer, Bambu Lab oder Snapmaker. Lizenz: [AGPL-3.0](LICENSE.txt).
+The companion source is provided under AGPL-3.0, matching this repository's [license](LICENSE.txt). OrcaSlicer and third-party plugins retain their respective licenses. This project has no official affiliation with OrcaSlicer, Bambu Lab or Snapmaker. AI-assisted development was used.
+
+
+## Upstream documentation
+
+The original OrcaSlicer README is available separately in [README.upstream.md](README.upstream.md). This repository's home page describes the Multi Printer Tabs companion.
