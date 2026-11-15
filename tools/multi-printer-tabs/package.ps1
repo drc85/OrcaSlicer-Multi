@@ -11,13 +11,13 @@ foreach ($name in @('OrcaSlicerMultiPrinterTabs.exe','OrcaSlicerMultiPrinterTabs
 }
 Copy-Item -LiteralPath "$PSScriptRoot\plugin\workspace_bridge.py" -Destination "$stage\plugin"
 Copy-Item -LiteralPath "$PSScriptRoot\work\webview2\WebView2-LICENSE.txt" -Destination $stage
-$zip = Join-Path $dist 'OrcaMultiPrinterTabs-0.16.0-win-x64.zip'
+$zip = Join-Path $dist 'OrcaMultiPrinterTabs-0.17.0-win-x64.zip'
 Compress-Archive -Path "$stage\*" -DestinationPath $zip -Force
 $artifacts = @($zip)
 if ($InnoCompiler) {
     & $InnoCompiler "$PSScriptRoot\installer.iss"
     if ($LASTEXITCODE -ne 0) { throw 'Installer build failed' }
-    $artifacts += Join-Path $dist 'OrcaMultiPrinterTabs-0.16.0-Setup.exe'
+    $artifacts += Join-Path $dist 'OrcaMultiPrinterTabs-0.17.0-Setup.exe'
 }
 $artifacts | ForEach-Object {
     $hash = Get-FileHash -LiteralPath $_ -Algorithm SHA256

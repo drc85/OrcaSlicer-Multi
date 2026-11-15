@@ -2,16 +2,16 @@
 
 Use several complete OrcaSlicer workspaces in one window. Keep a Bambu printer, a Snapmaker U1 and other supported printers open at the same time, with a separate project and Device view in each tab.
 
-**Windows x64 preview 0.16.0.** This is an independent companion application. It hosts separate OrcaSlicer processes in one window; it does not change Orca's C++ application or add a native tab feature to an upstream build. Building the inherited OrcaSlicer source alone does not build this companion.
+**Windows x64 preview 0.17.0.** This is an independent companion application. It hosts separate OrcaSlicer processes in one window; it does not change Orca's C++ application or add a native tab feature to an upstream build. Building the inherited OrcaSlicer source alone does not build this companion.
 
 ## Download and install
 
-**[Download Windows installer](https://github.com/drc85/OrcaSlicer-Multi/releases/download/multi-tabs-v0.16.0/OrcaMultiPrinterTabs-0.16.0-Setup.exe)** · **[Download portable ZIP](https://github.com/drc85/OrcaSlicer-Multi/releases/download/multi-tabs-v0.16.0/OrcaMultiPrinterTabs-0.16.0-win-x64.zip)**
+**[Download Windows installer](https://github.com/drc85/OrcaSlicer-Multi/releases/download/multi-tabs-v0.17.0/OrcaMultiPrinterTabs-0.17.0-Setup.exe)** · **[Download portable ZIP](https://github.com/drc85/OrcaSlicer-Multi/releases/download/multi-tabs-v0.17.0/OrcaMultiPrinterTabs-0.17.0-win-x64.zip)**
 
 Open [Releases](https://github.com/drc85/OrcaSlicer-Multi/releases) and download either:
 
-- `OrcaMultiPrinterTabs-0.16.0-Setup.exe`: per-user installer with Start menu and optional desktop shortcut. No administrator rights required.
-- `OrcaMultiPrinterTabs-0.16.0-win-x64.zip`: portable package. Extract the entire ZIP into a writable folder and run `OrcaSlicerMultiPrinterTabs.exe`. Keep its `plugin` folder and `.exe.config` beside it.
+- `OrcaMultiPrinterTabs-0.17.0-Setup.exe`: per-user installer with Start menu and optional desktop shortcut. No administrator rights required.
+- `OrcaMultiPrinterTabs-0.17.0-win-x64.zip`: portable package. Extract the entire ZIP into a writable folder and run `OrcaSlicerMultiPrinterTabs.exe`. Keep its `plugin` folder and `.exe.config` beside it.
 
 These downloads contain the companion and its own small tab-name bridge only. They do not contain an OrcaSlicer executable, third-party plugins, accounts, printer settings or projects. The binaries are unsigned; Windows may display its usual publisher warning. SHA-256 checksums are included with the release.
 
@@ -50,7 +50,7 @@ Default workspace storage is `Documents\OrcaMulti\OT\<8-character-id>`. Short pa
 All companion labels, tooltips, startup/status messages and bridge notifications are in English. Embedded Orca and Windows system dialogs follow their own language settings.
 
 - The fixed Split View button opens a visual grid picker for **1, 2, 4 or 8** workspaces. The fixed globe button beside it opens **Web Apps**. Both buttons highlight blue on hover.
-- Workspace tabs show **selected printer · current project**. The active tab is highlighted. `*` follows Orca's unsaved-project indicator.
+- Workspace tabs show **selected printer · current project**. All tabs currently visible in Split View are red; the active tab is brighter. `*` follows Orca's unsaved-project indicator.
 - **+**, directly after the last tab, highlights green on hover and creates another Orca workspace. Open a different project or select another printer independently in each one.
 - The top strip is dark red; bright red dividers appear only between split views. Drag the dark outer edges or corners to resize the window.
 - Each tab has its own **×**. Minimizing and maximizing are controlled by the shared buttons at the top right; the inner Orca minimize/maximize controls are covered in embedded views. The shared **×** highlights red on hover.

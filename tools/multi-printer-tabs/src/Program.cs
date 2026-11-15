@@ -118,7 +118,7 @@ namespace OrcaMultiPrinterTabs {
         readonly Color bg=Color.FromArgb(24,27,30), accent=Color.FromArgb(171,46,48);
 
         public Host() {
-            Text="OrcaSlicer Multi Printer Tabs — Preview 0.16.0"; Width=1500; Height=950; MinimumSize=new Size(900,600);
+            Text="OrcaSlicer Multi Printer Tabs — Preview 0.17.0"; Width=1500; Height=950; MinimumSize=new Size(900,600);
             FormBorderStyle=FormBorderStyle.None; Padding=new Padding(8); MaximizedBounds=Screen.FromHandle(Handle).WorkingArea;
             BackColor=bg; ForeColor=Color.WhiteSmoke; Font=new Font("Segoe UI",10); StartPosition=FormStartPosition.CenterScreen;
             tabs.Dock=DockStyle.Fill; tabs.WrapContents=false; tabs.AutoScroll=true; tabs.BackColor=Color.FromArgb(53,27,30); tabs.Padding=new Padding(7,5,7,0);
@@ -450,7 +450,7 @@ namespace OrcaMultiPrinterTabs {
             for(int i=0;i<workspaces.Count;i++) {
                 var w=workspaces[i];EnsureTabClose(w);int orcaIndex=orcaViews.IndexOf(w);
                 bool visible=w.Browser!=null?w==active:!webMode && orcaIndex>=start && orcaIndex<start+layoutCount;
-                w.Tab.BackColor=w==active?accent:visible?Color.FromArgb(103,49,53):Color.FromArgb(70,36,39);
+                w.Tab.BackColor=visible?accent:Color.FromArgb(70,36,39);
                 w.Tab.ForeColor=Color.White;
                 w.Tab.FlatAppearance.BorderSize=w==active?2:0;
                 w.Tab.FlatAppearance.BorderColor=Color.FromArgb(255,126,140);
