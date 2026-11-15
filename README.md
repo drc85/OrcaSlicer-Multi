@@ -4,6 +4,30 @@ Use several complete OrcaSlicer workspaces in one window. Keep a Bambu printer, 
 
 **Windows x64 preview 0.17.0.** This is an independent companion application. It hosts separate OrcaSlicer processes in one window; it does not change Orca's C++ application or add a native tab feature to an upstream build. Building the inherited OrcaSlicer source alone does not build this companion.
 
+## Screenshots
+
+The screenshots show a local preview. Embedded printer pages depend on the selected Orca build and installed integrations; they do not imply complete native H3C support.
+
+**Two independent printer Device views side by side**
+
+![Bambu and Snapmaker printer workspaces in split view](docs/images/multi-printer-tabs/two-printer-split-view.png)
+
+**Switch between complete printer and project tabs**
+
+![Snapmaker workspace selected in the tab strip](docs/images/multi-printer-tabs/printer-device-tab.png)
+
+![Bambu workspace selected in the same window](docs/images/multi-printer-tabs/bambu-device-tab.png)
+
+**Choose a visual layout for 1, 2, 4 or 8 workspaces**
+
+![Visual Split View layout picker](docs/images/multi-printer-tabs/split-view-picker.png)
+
+**Open your own favorite websites as tabs**
+
+![Web Apps picker with an example favorite and Edit list button](docs/images/multi-printer-tabs/web-apps-picker.png)
+
+The favorite shown above is an example from a local setup. The public release starts with an empty list: use **Edit list** to add your own links.
+
 ## Download and install
 
 **[Download Windows installer](https://github.com/drc85/OrcaSlicer-Multi/releases/download/multi-tabs-v0.17.0/OrcaMultiPrinterTabs-0.17.0-Setup.exe)** Â· **[Download portable ZIP](https://github.com/drc85/OrcaSlicer-Multi/releases/download/multi-tabs-v0.17.0/OrcaMultiPrinterTabs-0.17.0-win-x64.zip)**
