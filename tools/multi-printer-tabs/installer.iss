@@ -1,4 +1,4 @@
-#define AppVersion "0.9.1"
+#define AppVersion "0.16.0"
 [Setup]
 AppId={{9624E509-A864-46AA-90C3-B637B1234E5F}
 AppName=OrcaSlicer Multi Printer Tabs
@@ -29,6 +29,12 @@ Source: "OrcaSlicerMultiPrinterTabs.exe.config"; DestDir: "{app}"; Flags: ignore
 Source: "plugin\workspace_bridge.py"; DestDir: "{app}\plugin"; Flags: ignoreversion
 Source: "README.md"; DestDir: "{app}"; Flags: ignoreversion
 Source: "LICENSE"; DestDir: "{app}"; Flags: ignoreversion
+
+Source: "Microsoft.Web.WebView2.Core.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "Microsoft.Web.WebView2.WinForms.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "WebView2Loader.dll"; DestDir: "{app}"; Flags: ignoreversion
+
+Source: "work\webview2\WebView2-LICENSE.txt"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\OrcaSlicer Multi Printer Tabs"; Filename: "{app}\OrcaSlicerMultiPrinterTabs.exe"; WorkingDir: "{app}"

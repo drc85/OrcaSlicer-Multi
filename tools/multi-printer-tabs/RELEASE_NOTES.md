@@ -1,13 +1,9 @@
-Windows x64 preview of the Multi Printer Tabs companion.
+Windows x64 preview 0.16.0 of the Multi Printer Tabs companion.
 
-All companion labels, tooltips, startup dialogs, status messages and bridge notifications are now in English. Installer and project documentation are in English as well. Embedded Orca and Windows system dialogs follow their own language settings.
+Adds a visual 1/2/4/8 split-layout picker, a centered Web Apps favorites picker, independent website tabs, editable local links, per-tab close buttons, shared window controls, resize edges and updated hover colors. Red dividers appear only between views.
 
-Download **OrcaMultiPrinterTabs-0.9.1-Setup.exe** for installation, or extract **OrcaMultiPrinterTabs-0.9.1-win-x64.zip** for portable use. The automatic GitHub source archives are source code, not the installer.
+The public Web Apps list starts empty. Open the globe, choose Edit list, enter a name and http/https URL, click Add, then Save. No personal links, credentials, cookies, printer settings, projects or installed third-party plugins are included.
 
-Includes independent printer/project tabs, 1/2/4/8 split views, highlighted active tabs, bright red dividers, normal Orca save prompts when closing, and fixes preserving plugin texture/Python assets in local workspace copies. Startup window flashing is reduced but cannot be guaranteed absent.
+Download OrcaMultiPrinterTabs-0.16.0-Setup.exe or OrcaMultiPrinterTabs-0.16.0-win-x64.zip. Requires Windows 10/11 x64, .NET Framework 4.8, Microsoft Edge WebView2 Runtime and a separately installed compatible OrcaSlicer development/Nightly build. This companion release does not contain the ongoing native H3C build.
 
-Requires Windows 10/11 x64, .NET Framework 4.8 and a separately installed compatible OrcaSlicer development/Nightly build. Tested locally with 2.6.0-dev H3C build `1babccb8`; this release does not bundle or rebuild OrcaSlicer. Newer Nightly versions require compatibility testing.
-
-No personal configuration, accounts, projects or installed third-party plugins are included. The included local metadata bridge is part of this project. See the README for first start, limitations and the Open Bamboo Networking / Bambu Filament Manager links.
-
-Unsigned experimental software. Full printer/camera, mixed-DPI and eight-printer testing remains outstanding. Workspace data is retained on uninstall.
+Experimental unsigned software. Full website, printer/camera, mixed-DPI and eight-printer testing remains outstanding. Normal Orca save prompts are retained.

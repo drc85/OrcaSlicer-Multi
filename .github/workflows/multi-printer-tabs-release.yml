@@ -38,9 +38,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          $tag = 'multi-tabs-v0.9.1'
+          $tag = 'multi-tabs-v0.16.0'
           gh release view $tag --repo $env:GITHUB_REPOSITORY *> $null
           if ($LASTEXITCODE -eq 0) { throw 'Release already exists; use a new version for new source' }
-          gh release create $tag --repo $env:GITHUB_REPOSITORY --target $env:GITHUB_SHA --title 'Multi Printer Tabs 0.9.1 - Windows preview' --notes-file RELEASE_NOTES.md --prerelease --latest=false dist/OrcaMultiPrinterTabs-0.9.1-Setup.exe dist/OrcaMultiPrinterTabs-0.9.1-win-x64.zip dist/SHA256SUMS.txt
+          gh release create $tag --repo $env:GITHUB_REPOSITORY --target $env:GITHUB_SHA --title 'Multi Printer Tabs 0.16.0 - Windows preview' --notes-file RELEASE_NOTES.md --prerelease --latest=false dist/OrcaMultiPrinterTabs-0.16.0-Setup.exe dist/OrcaMultiPrinterTabs-0.16.0-win-x64.zip dist/SHA256SUMS.txt
           if ($LASTEXITCODE -ne 0) { throw 'Release publication failed' }
-

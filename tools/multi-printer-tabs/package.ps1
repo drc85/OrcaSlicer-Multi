@@ -6,17 +6,18 @@ New-Item -ItemType Directory -Force $dist | Out-Null
 # Deliberately list every release file. Never package the source folder recursively.
 $stage = Join-Path $dist ('portable-' + [Guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory -Force "$stage\plugin" | Out-Null
-foreach ($name in @('OrcaSlicerMultiPrinterTabs.exe','OrcaSlicerMultiPrinterTabs.exe.config','README.md','LICENSE')) {
+foreach ($name in @('OrcaSlicerMultiPrinterTabs.exe','OrcaSlicerMultiPrinterTabs.exe.config','README.md','LICENSE','Microsoft.Web.WebView2.Core.dll','Microsoft.Web.WebView2.WinForms.dll','WebView2Loader.dll')) {
     Copy-Item -LiteralPath (Join-Path $PSScriptRoot $name) -Destination $stage
 }
 Copy-Item -LiteralPath "$PSScriptRoot\plugin\workspace_bridge.py" -Destination "$stage\plugin"
-$zip = Join-Path $dist 'OrcaMultiPrinterTabs-0.9.1-win-x64.zip'
+Copy-Item -LiteralPath "$PSScriptRoot\work\webview2\WebView2-LICENSE.txt" -Destination $stage
+$zip = Join-Path $dist 'OrcaMultiPrinterTabs-0.16.0-win-x64.zip'
 Compress-Archive -Path "$stage\*" -DestinationPath $zip -Force
 $artifacts = @($zip)
 if ($InnoCompiler) {
     & $InnoCompiler "$PSScriptRoot\installer.iss"
     if ($LASTEXITCODE -ne 0) { throw 'Installer build failed' }
-    $artifacts += Join-Path $dist 'OrcaMultiPrinterTabs-0.9.1-Setup.exe'
+    $artifacts += Join-Path $dist 'OrcaMultiPrinterTabs-0.16.0-Setup.exe'
 }
 $artifacts | ForEach-Object {
     $hash = Get-FileHash -LiteralPath $_ -Algorithm SHA256

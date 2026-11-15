@@ -2,22 +2,22 @@
 
 Use several complete OrcaSlicer workspaces in one window. Keep a Bambu printer, a Snapmaker U1 and other supported printers open at the same time, with a separate project and Device view in each tab.
 
-**Windows x64 preview 0.9.1.** This is an independent companion application. It hosts separate OrcaSlicer processes in one window; it does not change Orca's C++ application or add a native tab feature to an upstream build. Building the inherited OrcaSlicer source alone does not build this companion.
+**Windows x64 preview 0.16.0.** This is an independent companion application. It hosts separate OrcaSlicer processes in one window; it does not change Orca's C++ application or add a native tab feature to an upstream build. Building the inherited OrcaSlicer source alone does not build this companion.
 
 ## Download and install
 
-**[Download Windows installer](https://github.com/drc85/OrcaSlicer-Multi/releases/download/multi-tabs-v0.9.1/OrcaMultiPrinterTabs-0.9.1-Setup.exe)** · **[Download portable ZIP](https://github.com/drc85/OrcaSlicer-Multi/releases/download/multi-tabs-v0.9.1/OrcaMultiPrinterTabs-0.9.1-win-x64.zip)**
+**[Download Windows installer](https://github.com/drc85/OrcaSlicer-Multi/releases/download/multi-tabs-v0.16.0/OrcaMultiPrinterTabs-0.16.0-Setup.exe)** Â· **[Download portable ZIP](https://github.com/drc85/OrcaSlicer-Multi/releases/download/multi-tabs-v0.16.0/OrcaMultiPrinterTabs-0.16.0-win-x64.zip)**
 
 Open [Releases](https://github.com/drc85/OrcaSlicer-Multi/releases) and download either:
 
-- `OrcaMultiPrinterTabs-0.9.1-Setup.exe`: per-user installer with Start menu and optional desktop shortcut. No administrator rights required.
-- `OrcaMultiPrinterTabs-0.9.1-win-x64.zip`: portable package. Extract the entire ZIP into a writable folder and run `OrcaSlicerMultiPrinterTabs.exe`. Keep its `plugin` folder and `.exe.config` beside it.
+- `OrcaMultiPrinterTabs-0.16.0-Setup.exe`: per-user installer with Start menu and optional desktop shortcut. No administrator rights required.
+- `OrcaMultiPrinterTabs-0.16.0-win-x64.zip`: portable package. Extract the entire ZIP into a writable folder and run `OrcaSlicerMultiPrinterTabs.exe`. Keep its `plugin` folder and `.exe.config` beside it.
 
 These downloads contain the companion and its own small tab-name bridge only. They do not contain an OrcaSlicer executable, third-party plugins, accounts, printer settings or projects. The binaries are unsigned; Windows may display its usual publisher warning. SHA-256 checksums are included with the release.
 
 ## Requirements / Nightly
 
-- Windows 10/11 x64 and .NET Framework 4.8.
+- Windows 10/11 x64, .NET Framework 4.8 and the Microsoft Edge WebView2 Evergreen Runtime (normally present on Windows 11).
 - A separately installed OrcaSlicer development/Nightly build with the Python plugin API used by `plugin/workspace_bridge.py`.
 - Local testing used **OrcaSlicer 2.6.0-dev, H3C PR #17273, commit `1babccb8`**, including H3C and Snapmaker U1 workspace names. Newer Nightly compatibility is not guaranteed.
 
@@ -49,22 +49,36 @@ Default workspace storage is `Documents\OrcaMulti\OT\<8-character-id>`. Short pa
 
 All companion labels, tooltips, startup/status messages and bridge notifications are in English. Embedded Orca and Windows system dialogs follow their own language settings.
 
-- The view selector at the far left shows **1, 2, 4 or 8** full workspaces. Layouts are single view, two side by side, 2×2, and 4×2.
-- Workspace tabs show **selected printer · current project**. The active tab is highlighted. `*` follows Orca's unsaved-project indicator.
-- **+**, directly after the last tab, creates another workspace. Open a different project or select another printer independently in each one.
-- The top strip is dark red; bright red dividers separate the split views.
-- Orca's own **X** closes that workspace. Its minimize/maximize buttons control the shared outer window.
+- The fixed Split View button opens a visual grid picker for **1, 2, 4 or 8** workspaces. The fixed globe button beside it opens **Web Apps**. Both buttons highlight blue on hover.
+- Workspace tabs show **selected printer Â· current project**. The active tab is highlighted. `*` follows Orca's unsaved-project indicator.
+- **+**, directly after the last tab, highlights green on hover and creates another Orca workspace. Open a different project or select another printer independently in each one.
+- The top strip is dark red; bright red dividers appear only between split views. Drag the dark outer edges or corners to resize the window.
+- Each tab has its own **Ã—**. Minimizing and maximizing are controlled by the shared buttons at the top right; the inner Orca minimize/maximize controls are covered in embedded views. The shared **Ã—** highlights red on hover.
 - The outer **X** at the far right closes all workspaces and then exits. Orca asks about unsaved work itself; there is no second companion confirmation. Cancel in Orca keeps the session running. **+** also cancels a pending shutdown.
 - Drag unused space on the top strip to move the window; double-click it to maximize/restore.
 
 Tabs keep independent configuration folders and locks. Changes are not continuously synchronized between tabs or back into the original Orca installation. Background tabs keep running and can maintain printer connections. The host itself sends no print, movement or heating commands.
 
+## Web Apps: add, open and remove links
+
+The public release starts with an **empty favorites list**. No personal links or browser profiles are included.
+
+1. Click the **globe** button beside Split View. A centered translucent Web Apps picker opens.
+2. Click **Edit list** at the bottom.
+3. Enter a **Name** and a complete **http://** or **https://** URL, then click **Add**.
+4. Click **Save**. Your favorite now appears as a tile in Web Apps.
+5. Click its tile to open the site in its own top-level tab. Opening it again selects the existing tab.
+
+To change an entry, select it in **Edit list**, edit its name or URL, click **Update**, then **Save**. To delete one, select it, click **Remove**, then **Save**. **Cancel** discards unsaved list changes. Close a website with its tab's **Ã—**. Closing a web tab does not sign you out.
+
+Favorites are stored locally in `web-apps.json` beside the companion. WebView2 stores cookies and sign-in sessions under `%LOCALAPPDATA%\\OrcaMulti\\WebApps`. Do not publish either location: saved URLs can themselves contain private tokens. Website tabs are not restored automatically on startup. Some websites may restrict embedded browsers, downloads, popups or sign-in; compatibility with every site is not guaranteed.
+
 ## Bambu printers: networking and filament management
 
 For the Bambu workflow used with this setup, install these separately in your compatible Orca build before making new workspace copies:
 
-- [Open Bamboo Networking Plugin — Orca Cloud](https://cloud.orcaslicer.com/p/51a2b22084da), with [networking library source](https://github.com/persano/open-bambu-networking-plugin). This provides the Open Bamboo integration used for Bambu connectivity here. Follow its installation and library-update instructions, then restart Orca and sign in locally if required.
-- [Bambu Filament Manager — Orca Cloud](https://cloud.orcaslicer.com/app/plugins/plugin-hub/3c5fccb6-d04f-4ab6-9b99-5b3eb7ddacb7), for the associated filament/AMS workflow. Follow its own setup instructions. It is an additional filament-management tool, not a universal requirement for sending a print.
+- [Open Bamboo Networking Plugin â€” Orca Cloud](https://cloud.orcaslicer.com/p/51a2b22084da), with [networking library source](https://github.com/persano/open-bambu-networking-plugin). This provides the Open Bamboo integration used for Bambu connectivity here. Follow its installation and library-update instructions, then restart Orca and sign in locally if required.
+- [Bambu Filament Manager â€” Orca Cloud](https://cloud.orcaslicer.com/app/plugins/plugin-hub/3c5fccb6-d04f-4ab6-9b99-5b3eb7ddacb7), for the associated filament/AMS workflow. Follow its own setup instructions. It is an additional filament-management tool, not a universal requirement for sending a print.
 
 The networking plugin's name is **Open Bamboo**, which is different from Bambu Lab's separate **Bambu Connect** application. Neither third-party plugin nor any credentials are bundled in this repository or release. Their support, firmware compatibility and login requirements are controlled by their maintainers.
 
@@ -97,13 +111,13 @@ python .\tests\test_bridge.py
 .\package.ps1
 ```
 
-The build uses the .NET Framework compiler included with Windows; no .NET SDK is needed. `package.ps1` builds the portable ZIP and checksums. To also build the installer, install [Inno Setup 6](https://jrsoftware.org/isinfo.php) and pass `-InnoCompiler 'C:\Program Files (x86)\Inno Setup 6\ISCC.exe'`.
+The build uses the .NET Framework compiler included with Windows; no .NET SDK is needed. `restore-webview.ps1` downloads the pinned Microsoft WebView2 SDK from NuGet. Build from the full repository checkout so the original Orca icon is available. `package.ps1` builds the portable ZIP and checksums. To also build the installer, install [Inno Setup 6](https://jrsoftware.org/isinfo.php) and pass `-InnoCompiler 'C:\Program Files (x86)\Inno Setup 6\ISCC.exe'`.
 
 The release workflow builds only this companion and publishes a prerelease from its exact source commit. It does not rebuild the full Orca C++ application. Offline bridge tests use a fake Orca API. The clone regression test checks required plugin assets survive and application logs are omitted; neither test reads real printer data. The common local window-host behavior was manually exercised; complete end-to-end printing tests remain outstanding.
 
 ## Privacy and removal
 
-Only explicitly selected source/build/documentation files are published. Do not share `settings.json`, `session.json`, `host.log`, workspace folders or Orca data folders: they may contain local paths, login tokens, printer addresses and personal settings. Do not upload screenshots containing credentials when reporting an issue.
+Only explicitly selected source/build/documentation files are published. Do not share `web-apps.json`, WebView2 profiles, `settings.json`, `session.json`, `host.log`, workspace folders or Orca data folders: they may contain local paths, login tokens, printer addresses and personal settings. Do not upload screenshots containing credentials when reporting an issue.
 
 The companion's own bridge writes printer name, project path, dirty state and process ID into local plugin storage. It has no network access or printer-control commands. It is project source, not a copy of a user's installed third-party plugin.
 
@@ -115,3 +129,4 @@ The companion source is provided under AGPL-3.0, matching this repository's [lic
 ## Upstream documentation
 
 The original OrcaSlicer README is available separately in [README.upstream.md](README.upstream.md). This repository's home page describes the Multi Printer Tabs companion.
+

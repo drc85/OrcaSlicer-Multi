@@ -10,3 +10,8 @@ session.json
 host.log
 instances/
 *.log
+
+web-apps.json
+web-apps.json.tmp
+data/
+*WebApps*/
